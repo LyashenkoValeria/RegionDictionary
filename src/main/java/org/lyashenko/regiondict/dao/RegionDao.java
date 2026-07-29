@@ -4,16 +4,19 @@ import org.lyashenko.regiondict.model.Region;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 public interface RegionDao {
 
     List<Region> findAll();
 
-    Region findByRegionCode(Integer code);
+    Optional<Region> findByRegionCode(Integer code);
 
     void create(Region region);
 
     void delete(Integer code);
 
     void update(Region region);
+
+    boolean isExists(int code);
 }

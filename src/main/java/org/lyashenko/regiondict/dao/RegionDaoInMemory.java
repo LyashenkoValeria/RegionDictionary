@@ -2,10 +2,7 @@ package org.lyashenko.regiondict.dao;
 
 import org.lyashenko.regiondict.model.Region;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RegionDaoInMemory implements RegionDao{
     private Map<Integer, Region> storage = new HashMap<>();
@@ -16,8 +13,8 @@ public class RegionDaoInMemory implements RegionDao{
     }
 
     @Override
-    public Region findByRegionCode(Integer code) {
-        return storage.get(code);
+    public Optional<Region> findByRegionCode(Integer code) {
+        return Optional.ofNullable(storage.get(code));
     }
 
     @Override
@@ -34,5 +31,10 @@ public class RegionDaoInMemory implements RegionDao{
     public void update(Region region) {
         Integer code = region.getRegionCode();
         storage.put(code, region);
+    }
+
+    @Override
+    public boolean isExists(int code) {
+        return storage.get(code) != null;
     }
 }

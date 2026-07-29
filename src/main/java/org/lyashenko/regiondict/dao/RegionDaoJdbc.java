@@ -7,6 +7,7 @@ import org.lyashenko.regiondict.util.ConnectionUtil;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class RegionDaoJdbc implements RegionDao {
     private static final String FIND_ALL = "select * from region";
@@ -14,6 +15,7 @@ public class RegionDaoJdbc implements RegionDao {
     private static final String CREATE_REGION = "insert into region (region_code, region_name) values (?, ?)";
     private static final String DELETE_REGION = "delete from region where region_code = ?";
     private static final String UPDATE_REGION = "update region set region_name = ? where region_code = ?";
+    private static final String REGION_EXISTS = "select exists (select 1 from region where region_code = ?) as found";
 
 
     @Override
@@ -32,15 +34,15 @@ public class RegionDaoJdbc implements RegionDao {
     }
 
     @Override
-    public Region findByRegionCode(Integer code) {
+    public Optional<Region> findByRegionCode(Integer code) {
         try (Connection connection = ConnectionUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_CODE)) {
             preparedStatement.setInt(1, code);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                return buildRegion(resultSet);
+                return Optional.of(buildRegion(resultSet));
             }
-            return null;
+            return Optional.empty();
         } catch (SQLException e) {
             throw new SqlProcessingException(e);
         }
@@ -76,6 +78,20 @@ public class RegionDaoJdbc implements RegionDao {
             preparedStatement.setString(1, region.getRegionName());
             preparedStatement.setInt(2, region.getRegionCode());
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SqlProcessingException(e);
+        }
+    }
+
+    @Override
+    public boolean isExists(int code) {
+        try(Connection connection = ConnectionUtil.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(REGION_EXISTS)){
+            preparedStatement.setInt(1, code);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getBoolean("found");
+
         } catch (SQLException e) {
             throw new SqlProcessingException(e);
         }

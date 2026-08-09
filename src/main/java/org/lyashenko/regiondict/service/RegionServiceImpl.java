@@ -5,10 +5,13 @@ import org.lyashenko.regiondict.dao.RegionDaoJdbc;
 import org.lyashenko.regiondict.exception.RegionAlreadyExists;
 import org.lyashenko.regiondict.exception.RegionNotFoundException;
 import org.lyashenko.regiondict.model.Region;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class RegionServiceImpl implements RegionService {
     private final RegionDao regionDao;
 

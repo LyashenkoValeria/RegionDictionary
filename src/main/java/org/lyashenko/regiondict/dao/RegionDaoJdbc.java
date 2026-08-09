@@ -3,12 +3,14 @@ package org.lyashenko.regiondict.dao;
 import org.lyashenko.regiondict.exception.SqlProcessingException;
 import org.lyashenko.regiondict.model.Region;
 import org.lyashenko.regiondict.util.ConnectionUtil;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Repository
 public class RegionDaoJdbc implements RegionDao {
     private static final String FIND_ALL = "select * from region";
     private static final String FIND_BY_CODE = "select * from region where region_code = ?";

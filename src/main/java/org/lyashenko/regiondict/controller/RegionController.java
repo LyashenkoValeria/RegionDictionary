@@ -1,9 +1,11 @@
 package org.lyashenko.regiondict.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.lyashenko.regiondict.model.Region;
 import org.lyashenko.regiondict.service.RegionService;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -13,8 +15,6 @@ public class RegionController {
     public RegionController(RegionService regionService) {
         this.regionService = regionService;
     }
-
-    //TODO: Сделать возврат Swagger(в виде UI) - html
 
     @GetMapping("/api/v1/regions")
     public List<Region> findAll(){

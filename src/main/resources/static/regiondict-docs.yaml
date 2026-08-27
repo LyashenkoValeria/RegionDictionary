@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+  title: Region Dictionary specification
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Java Server
+paths:
+  /regions:
+    get:
+      description: Возвращает список всех регионов
+      summary: Метод получения всех регионов
+      operationId: findAll
+      responses:
+        '200':
+          description: Успешный ответ со списком регионов
+          content:
+            items:
+              schema:
+                $ref: '#/components/schemas/Region'
+
+  /region/{code}:
+    get:
+      description: Возвращает регион по его коду
+      summary: Метод получения одного региона
+      operationId: findByCode
+      parameters:
+        - name: code
+          in: path
+          required: true
+          description: Идентификатор региона
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный ответ с регионом
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Region'
+    delete:
+      description: Удалеет один регион по коду
+      summary: Метод удаления региона
+      operationId: delete
+      parameters:
+        - name: code
+          in: path
+          required: true
+          description: Идентификатор региона
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Успешный ответ об удалении региона
+
+  /region:
+    post:
+      description: Создаёт новый регион
+      summary: Метод создания региона
+      operationId: create
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Region'
+      responses:
+        '200':
+          description: Успешный ответ о создании региона
+
+    put:
+      description: Обновляет информацию о регионе в базе данных
+      summary: Метод изменения региона
+      operationId: update
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Region'
+      responses:
+        '200':
+          description: Успешный ответ об изменении данных региона
+
+components:
+  schemas:
+    Region:
+      type: object
+      required:
+        - regionCode
+        - regionName
+      properties:
+        regionCode:
+          type: integer
+          example: 77
+        regionName:
+          type: string
+          example: Москва

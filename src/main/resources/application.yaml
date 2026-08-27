@@ -3,3 +3,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/regiondict
     username: postgres
     password: admin
+  liquibase:
+    change-log: classpath:/db/liquibase-changelog.xml
+
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    url: /regiondict-docs.yaml

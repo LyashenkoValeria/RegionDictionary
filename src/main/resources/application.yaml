@@ -5,9 +5,7 @@ spring:
     password: admin
   liquibase:
     change-log: classpath:/db/liquibase-changelog.xml
-
 springdoc:
-  api-docs:
-    enabled: true
   swagger-ui:
+    path: /swagger
     url: /regiondict-docs.yaml

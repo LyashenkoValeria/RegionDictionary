@@ -5,22 +5,29 @@ info:
 servers:
   - url: http://localhost:8080
     description: Java Server
+tags:
+  - name: RegionController
+    description: Доступные операции для регионов
 paths:
-  /regions:
+  /api/v1/regions:
     get:
+      tags:
+        - RegionController
       description: Возвращает список всех регионов
       summary: Метод получения всех регионов
       operationId: findAll
       responses:
         '200':
           description: Успешный ответ со списком регионов
-          content:
+          content: #Разобраться с отображением массива
             items:
               schema:
                 $ref: '#/components/schemas/Region'
 
-  /region/{code}:
+  /api/v1/region/{code}:
     get:
+      tags:
+        - RegionController
       description: Возвращает регион по его коду
       summary: Метод получения одного региона
       operationId: findByCode
@@ -38,7 +45,17 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Region'
+        '404':
+          description: Регион с указанным кодом не найден
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Region 1000 not found"
+
     delete:
+      tags:
+        - RegionController
       description: Удалеет один регион по коду
       summary: Метод удаления региона
       operationId: delete
@@ -53,8 +70,10 @@ paths:
         '200':
           description: Успешный ответ об удалении региона
 
-  /region:
+  /api/v1/region:
     post:
+      tags:
+        - RegionController
       description: Создаёт новый регион
       summary: Метод создания региона
       operationId: create
@@ -67,8 +86,17 @@ paths:
       responses:
         '200':
           description: Успешный ответ о создании региона
+        '400':
+          description: Регион с указанным кодом уже существует
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Region 1000 already exists"
 
     put:
+      tags:
+        - RegionController
       description: Обновляет информацию о регионе в базе данных
       summary: Метод изменения региона
       operationId: update
@@ -81,6 +109,13 @@ paths:
       responses:
         '200':
           description: Успешный ответ об изменении данных региона
+        '404':
+          description: Регион с указанным кодом не найден
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Region 1000 not found"
 
 components:
   schemas:

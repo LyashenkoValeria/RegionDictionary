@@ -109,4 +109,9 @@ public class RegionDaoJdbc implements RegionDao {
         String regionName = resultSet.getString("region_name");
         return new Region(regionCode, regionName);
     }
+
+    @Override
+    public void deleteAll() {
+        //TODO: Сделать запрос на удаление всех записей из таблицы. executeUpdate(см delete)
+    }
 }

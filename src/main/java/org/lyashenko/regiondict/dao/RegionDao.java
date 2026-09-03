@@ -19,4 +19,6 @@ public interface RegionDao {
     void update(Region region);
 
     boolean isExists(int code);
+
+    void deleteAll();
 }

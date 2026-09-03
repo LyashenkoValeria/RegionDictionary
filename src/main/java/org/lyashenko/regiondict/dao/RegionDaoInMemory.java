@@ -5,7 +5,7 @@ import org.lyashenko.regiondict.model.Region;
 import java.util.*;
 
 public class RegionDaoInMemory implements RegionDao{
-    private Map<Integer, Region> storage = new HashMap<>();
+    private final Map<Integer, Region> storage = new LinkedHashMap<>();
 
     @Override
     public List<Region> findAll() {
@@ -36,5 +36,10 @@ public class RegionDaoInMemory implements RegionDao{
     @Override
     public boolean isExists(int code) {
         return storage.get(code) != null;
+    }
+
+    @Override
+    public void deleteAll() {
+        storage.clear();
     }
 }

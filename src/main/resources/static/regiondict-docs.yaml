@@ -19,10 +19,12 @@ paths:
       responses:
         '200':
           description: Успешный ответ со списком регионов
-          content: #Разобраться с отображением массива
-            items:
+          content:
+            application/json:
               schema:
-                $ref: '#/components/schemas/Region'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Region'
 
   /api/v1/region/{code}:
     get:

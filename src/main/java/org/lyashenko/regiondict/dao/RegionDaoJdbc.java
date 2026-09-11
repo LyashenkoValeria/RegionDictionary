@@ -2,6 +2,7 @@ package org.lyashenko.regiondict.dao;
 
 import org.lyashenko.regiondict.exception.SqlProcessingException;
 import org.lyashenko.regiondict.model.Region;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
+@ConditionalOnProperty(name = "daoMode", havingValue = "jdbc")
 public class RegionDaoJdbc implements RegionDao {
     private static final String FIND_ALL = "select * from region";
     private static final String FIND_BY_CODE = "select * from region where region_code = ?";

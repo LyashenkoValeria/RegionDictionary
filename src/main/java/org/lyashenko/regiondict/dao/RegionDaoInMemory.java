@@ -1,10 +1,14 @@
 package org.lyashenko.regiondict.dao;
 
 import org.lyashenko.regiondict.model.Region;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.stereotype.Repository;
 
 import java.util.*;
 
-public class RegionDaoInMemory implements RegionDao{
+@Repository
+@ConditionalOnProperty(name = "daoMode", havingValue = "inMemory")
+public class RegionDaoInMemory implements RegionDao {
     private final Map<Integer, Region> storage = new LinkedHashMap<>();
 
     @Override

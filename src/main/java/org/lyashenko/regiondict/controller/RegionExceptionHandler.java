@@ -17,7 +17,6 @@ public class RegionExceptionHandler {
         return exception.getMessage();
     }
 
-    //TODO: BadRequest
     @ExceptionHandler(RegionAlreadyExists.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String regionAlreadyExistsExceptionHandler(RegionAlreadyExists exception) {

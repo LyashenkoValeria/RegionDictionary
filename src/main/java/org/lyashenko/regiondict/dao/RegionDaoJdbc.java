@@ -18,6 +18,7 @@ public class RegionDaoJdbc implements RegionDao {
     private static final String DELETE_REGION = "delete from region where region_code = ?";
     private static final String UPDATE_REGION = "update region set region_name = ? where region_code = ?";
     private static final String REGION_EXISTS = "select exists (select 1 from region where region_code = ?) as found";
+    private static final String DELETE_ALL = "delete from regiondict";
 
     private final DataSource dataSource;
 
@@ -113,5 +114,11 @@ public class RegionDaoJdbc implements RegionDao {
     @Override
     public void deleteAll() {
         //TODO: Сделать запрос на удаление всех записей из таблицы. executeUpdate(см delete)
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ALL)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new SqlProcessingException(e);
+        }
     }
 }

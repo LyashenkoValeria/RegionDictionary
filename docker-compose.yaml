@@ -1,0 +1,12 @@
+services:
+  regiondict:
+    build: ./
+    image: regiondict:0.0.2
+    ports:
+      - 8080:8080
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_DB: regiondict
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin

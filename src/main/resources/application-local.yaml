@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/regiondict
+    username: postgres
+    password: admin
+  liquibase:
+    change-log: classpath:/db/liquibase-changelog.xml
+    enabled: true
+  web:
+    resources:
+      cache:
+        period: 0
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+    url: /regiondict-docs.yaml
+  cache:
+    disabled: true
+
+daoMode: jdbc
+
+server:
+  port: 8080

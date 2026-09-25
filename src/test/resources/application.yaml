@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:13.1:///
+    username: postgres
+    password: postgres
+    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
+  liquibase:
+    change-log: classpath:/db/liquibase-changelog.xml
+    enabled: true
+  web:
+    resources:
+      cache:
+        period: 0
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+    url: /regiondict-docs.yaml
+  cache:
+    disabled: true
+
+daoMode: jdbc
+
+server:
+  port: 8080

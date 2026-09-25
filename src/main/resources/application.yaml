@@ -1,0 +1,14 @@
+spring:
+  liquibase:
+    change-log: classpath:/db/liquibase-changelog.xml
+  web:
+    resources:
+      cache:
+        period: 0
+
+springdoc:
+  swagger-ui:
+    path: /swagger
+    url: /regiondict-docs.yaml
+  cache:
+    disabled: true

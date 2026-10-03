@@ -6,7 +6,10 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +23,7 @@ public class RegionDaoJdbc implements RegionDao {
     private static final String DELETE_REGION = "delete from region where region_code = ?";
     private static final String UPDATE_REGION = "update region set region_name = ? where region_code = ?";
     private static final String REGION_EXISTS = "select exists (select 1 from region where region_code = ?) as found";
-    private static final String DELETE_ALL = "delete from regiondict";
+    private static final String DELETE_ALL = "delete from region";
 
     private final DataSource dataSource;
 
@@ -95,8 +98,8 @@ public class RegionDaoJdbc implements RegionDao {
 
     @Override
     public boolean isExists(int code) {
-        try(Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(REGION_EXISTS)){
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(REGION_EXISTS)) {
             preparedStatement.setInt(1, code);
             ResultSet resultSet = preparedStatement.executeQuery();
             resultSet.next();
@@ -115,7 +118,6 @@ public class RegionDaoJdbc implements RegionDao {
 
     @Override
     public void deleteAll() {
-        //TODO: Сделать запрос на удаление всех записей из таблицы. executeUpdate(см delete)
         try (Connection connection = dataSource.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ALL)) {
             preparedStatement.executeUpdate();

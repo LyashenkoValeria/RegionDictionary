@@ -6,7 +6,5 @@ spring:
   liquibase:
     enabled: true
 
-daoMode: jdbc
-
 server:
   port: 8080

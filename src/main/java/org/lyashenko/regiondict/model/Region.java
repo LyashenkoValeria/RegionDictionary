@@ -1,8 +1,20 @@
 package org.lyashenko.regiondict.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "region")
 public class Region {
+    @Id
+    @Column(name = "region_code")
     private Integer regionCode;
+    @Column(name = "region_name")
     private String regionName;
+
+    public Region() {}
 
     public Region(Integer regionCode, String regionName) {
         this.regionCode = regionCode;

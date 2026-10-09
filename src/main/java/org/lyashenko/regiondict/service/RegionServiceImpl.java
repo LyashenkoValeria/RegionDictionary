@@ -1,52 +1,52 @@
 package org.lyashenko.regiondict.service;
 
-import org.lyashenko.regiondict.dao.RegionDao;
 import org.lyashenko.regiondict.exception.RegionAlreadyExists;
 import org.lyashenko.regiondict.exception.RegionNotFoundException;
 import org.lyashenko.regiondict.model.Region;
+import org.lyashenko.regiondict.repository.RegionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class RegionServiceImpl implements RegionService {
-    private final RegionDao regionDao;
+    private final RegionRepository repository;
 
-    public RegionServiceImpl(RegionDao regionDao) {
-        this.regionDao = regionDao;
+    public RegionServiceImpl(RegionRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public List<Region> findAll() {
-        return regionDao.findAll();
+        return repository.findAll();
     }
 
     @Override
     public Region findByRegionCode(Integer code) {
-        return regionDao.findByRegionCode(code).orElseThrow(() ->
+        return repository.findById(code).orElseThrow(() ->
                 new RegionNotFoundException(code));
     }
 
     @Override
     public void create(Region region) {
-        if (regionDao.isExists(region.getRegionCode())) {
+        if (repository.existsById(region.getRegionCode())) {
             throw new RegionAlreadyExists(region.getRegionCode());
         } else {
-            regionDao.create(region);
+            repository.save(region);
         }
 
     }
 
     @Override
     public void delete(Integer code) {
-        regionDao.delete(code);
+        repository.deleteById(code);
     }
 
     @Override
     public void update(Region region) {
         int code = region.getRegionCode();
-        if (regionDao.isExists(code)) {
-            regionDao.update(region);
+        if (repository.existsById(code)) {
+            repository.save(region);
         } else {
             throw new RegionNotFoundException(code);
         }

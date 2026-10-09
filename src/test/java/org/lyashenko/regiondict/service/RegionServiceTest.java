@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.lyashenko.regiondict.exception.RegionAlreadyExists;
 import org.lyashenko.regiondict.exception.RegionNotFoundException;
 import org.lyashenko.regiondict.model.Region;
+import org.lyashenko.regiondict.repository.RegionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.testcontainers.junit.jupiter.Testcontainers;
@@ -16,15 +17,17 @@ import java.util.List;
 @Testcontainers
 class RegionServiceTest {
     private final RegionService regionService;
+    private final RegionRepository repository;
 
     @Autowired
-    public RegionServiceTest(RegionService regionService) {
+    public RegionServiceTest(RegionService regionService, RegionRepository repository) {
         this.regionService = regionService;
+        this.repository = repository;
     }
 
     @AfterEach
     void cleanUp() {
-        //regionService.deleteAll();
+        repository.deleteAll();
     }
 
     @Test
